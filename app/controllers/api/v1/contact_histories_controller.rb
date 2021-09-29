@@ -30,11 +30,6 @@ class Api::V1::ContactHistoriesController < ApplicationController
     end
     
     def contact_history_params
-      params.require(:contact_history).require(:first_name)
-      params.require(:contact_history).require(:last_name)
-      params.require(:contact_history).require(:email)
-      params.require(:contact_history).require(:phone_number)
-      params.require(:contact_history).require(:state)
       params.require(:contact_history).permit(:first_name,:last_name,:email, :phone_number, :state)
     end
 end
