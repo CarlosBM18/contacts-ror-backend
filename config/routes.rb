@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       resources :contacts
       resources :users, only: [:create, :destroy, :update]
       post "/login", to: "users#login"
-      resources :contacts_history, only: [:show]
+      resources :contact_histories, only: [:show]
     end
   end
 end

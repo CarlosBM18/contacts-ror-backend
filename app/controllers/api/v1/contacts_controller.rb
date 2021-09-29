@@ -1,4 +1,5 @@
 class Api::V1::ContactsController < ApplicationController
+  # TODO: check_contact_exists
   before_action :set_contact, only: [:show, :update, :destroy]
 
   # GET /contacts
@@ -50,15 +51,8 @@ class Api::V1::ContactsController < ApplicationController
 
   # DELETE /contacts/1
   def destroy
-    if @user.id == @contact.user_id
-      if @contact.destroy
-        @contact_history = ContactHistory.new(contact_params)
-        @contact_history.contact_id = @contact.id
-        @contact_history.user_id = @user.id
-        @contact_history.state = "deleted"
-        @contact_history.save
-      end
-
+    if @user.id == @contact.user_id #TODO: before_action
+      @contact.destroy
     else
       render json: {error: "Can't destroy that contact"}
     end
