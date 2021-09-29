@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
         render json: @user.errors, status: :unprocessable_entity
       end
     else
-      render json: {error: "Can't update that user"}, status :unauthorized
+      render json: {error: "Can't update that user"}
     end
   end
 
@@ -40,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
     if @user.id == params[:id]
       @user.destroy
     else
-      render json: {error: "Can't destroy that user"}, status :unauthorized
+      render json: {error: "Can't destroy that user"}
     end
   end
 
@@ -57,7 +57,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
-  
+
     def user_params
       params.require(:user).require(:email)
       params.require(:user).require(:password)

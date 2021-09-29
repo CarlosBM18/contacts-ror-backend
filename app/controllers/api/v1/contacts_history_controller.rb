@@ -18,7 +18,7 @@ class Api::V1::ContactsHistoryController < ApplicationController
       @contacts_histroy = ContactHistory.order("created_at DESC").where(contact_id: params[:id].to_i)
       render json: @contacts_histroy
     else
-      render json: {error: "Can't show that contact history"}, status :unauthorized
+      render json: {error: "Can't show that contact history"}
     end
   end 
 

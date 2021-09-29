@@ -60,12 +60,12 @@ class Api::V1::ContactsController < ApplicationController
       end
 
     else
-      render json: {error: "Can't destroy that contact"}, status :unauthorized
+      render json: {error: "Can't destroy that contact"}
     end
   end
 
   private
-  
+
     def set_contact
       @contact = Contact.find(params[:id])
     end
