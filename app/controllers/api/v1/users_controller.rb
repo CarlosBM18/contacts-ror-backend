@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authorized, only: [:destroy, :update]
+  before_action :authenticated_user, only: [:update, :destroy]
 
   # REGISTER
   def create
@@ -15,26 +16,19 @@ class Api::V1::UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    if @user.id == params[:id].to_i
-      if @user.update(user_params)
-        render json: @user
-      else
-        response = Hash.new 
-        response['errors'] = @user.errors
-        render json: response ,  status: :unprocessable_entity
-      end
+    if @user.update(user_params)
+      render json: @user
     else
-      render json: {error: "Can't update that user"}
+      response = Hash.new 
+      response['errors'] = @user.errors
+      render json: response ,  status: :unprocessable_entity
     end
   end
 
   # DELETE /users/1
   def destroy
-    if @user.id == params[:id]
-      @user.destroy
-    else
-      render json: {error: "Can't destroy that user"}
-    end
+    return render status: :forbidden unless @user.destroy
+    render status: :ok
   end
 
   # LOGGING IN
@@ -52,6 +46,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
+
+    def authenticated_user
+      render json: response , status: :forbidden unless @user.id == params[:id].to_i
+    end
 
     def user_params
       params.require(:user).permit(:email, :password)
