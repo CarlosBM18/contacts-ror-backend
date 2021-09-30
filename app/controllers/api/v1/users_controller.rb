@@ -10,18 +10,7 @@ class Api::V1::UsersController < ApplicationController
     else
       response = Hash.new 
       response['errors'] = @user.errors
-      render json: response ,  status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /users/1
-  def update
-    if @user.update(user_params)
-      render json: @user
-    else
-      response = Hash.new 
-      response['errors'] = @user.errors
-      render json: response ,  status: :unprocessable_entity
+      render json: response, status: :unprocessable_entity
     end
   end
 

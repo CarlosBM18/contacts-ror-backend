@@ -20,9 +20,10 @@ class ApplicationController < ActionController::API
   end
 
   def logged_in_user
-    return unless decoded_token
-    user_id = decoded_token[0]['user_id']
-    @user = User.find(user_id)
+    if decoded_token
+      user_id = decoded_token[0]['user_id']
+      @user = User.find_by(id: user_id)
+    end
   end
 
   def logged_in?
