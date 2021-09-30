@@ -30,7 +30,9 @@ class Api::V1::ContactsController < ApplicationController
       @contact_history.save
       render json: @contact, status: :created
     else
-      render json: @contact.errors, status: :unprocessable_entity
+      response = Hash.new 
+      response['errors'] = @contact.errors
+      render json: response ,  status: :unprocessable_entity
     end
   end
 
@@ -42,10 +44,11 @@ class Api::V1::ContactsController < ApplicationController
       @contact_history.user_id = @user.id
       @contact_history.state = "updated"
       @contact_history.save
-      
       render json: @contact
     else
-      render json: @contact.errors, status: :unprocessable_entity
+      response = Hash.new 
+      response['errors'] = @contact.errors
+      render json: response ,  status: :unprocessable_entity
     end
   end
 

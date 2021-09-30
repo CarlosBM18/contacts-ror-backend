@@ -4,8 +4,13 @@ class Api::V1::UsersController < ApplicationController
   # REGISTER
   def create
     @user = User.new(user_params)
-    return render json: @user.errors, status: :unprocessable_entity unless @user.save
-    render json: @user, status: :created
+    if @user.save
+      render json: @user, status: :created
+    else
+      response = Hash.new 
+      response['errors'] = @user.errors
+      render json: response ,  status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /users/1
@@ -14,7 +19,9 @@ class Api::V1::UsersController < ApplicationController
       if @user.update(user_params)
         render json: @user
       else
-        render json: @user.errors, status: :unprocessable_entity
+        response = Hash.new 
+        response['errors'] = @user.errors
+        render json: response ,  status: :unprocessable_entity
       end
     else
       render json: {error: "Can't update that user"}
@@ -38,7 +45,9 @@ class Api::V1::UsersController < ApplicationController
       token = encode_token({user_id: @user.id})
       render json: {user: @user, token: token}
     else
-      render json: {error: "Invalid email or password"}, status: 400
+      response = Hash.new
+      response['errors'] = {"invalid":["email or password"]}
+      render json: response ,  status: :unprocessable_entity
     end
   end
 
