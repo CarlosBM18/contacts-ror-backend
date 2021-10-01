@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authorized, only: [:destroy, :update]
-  before_action :authenticated_user, only: [:update, :destroy]
+  before_action :authorized, only: [:destroy, :update, :show]
+  before_action :authenticated_user, only: [:update, :destroy, :show]
 
   # REGISTER
   def create
@@ -12,6 +12,10 @@ class Api::V1::UsersController < ApplicationController
       response['errors'] = @user.errors
       render json: response, status: :unprocessable_entity
     end
+  end
+
+  def show
+    render json: @user, status: :ok
   end
 
   # DELETE /users/1
