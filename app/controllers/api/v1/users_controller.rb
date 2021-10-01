@@ -10,7 +10,7 @@ class Api::V1::UsersController < ApplicationController
     else
       response = Hash.new 
       response['errors'] = @user.errors
-      render json: response, status: :unprocessable_entity
+      render json: response, status: :bad_request
     end
   end
 
@@ -20,11 +20,11 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    return render status: :forbidden unless @user.destroy
+    return render status: :internal_server_error unless @user.destroy
     render status: :ok
   end
 
-  # LOGGING IN
+  # Login user
   def login
     @user = User.find_by(email: params[:email])
 
@@ -34,12 +34,11 @@ class Api::V1::UsersController < ApplicationController
     else
       response = Hash.new
       response['errors'] = {"invalid":["email or password"]}
-      render json: response ,  status: :unprocessable_entity
+      render json: response ,  status: :bad_request
     end
   end
 
   private
-
     def authenticated_user
       render json: response , status: :forbidden unless @user.id == params[:id].to_i
     end

@@ -1,7 +1,7 @@
 class Api::V1::ContactsController < ApplicationController
-  # TODO: check_contact_exists
   before_action :set_contact, only: [:show, :update, :destroy]
-
+  before_action :check_user_contact, only: [:show, :update, :destroy]
+  
   # GET /contacts
   def index
     @contacts = Contact.order("first_name ASC").where(user_id: @user.id)
@@ -10,11 +10,7 @@ class Api::V1::ContactsController < ApplicationController
 
   # GET /contacts/1
   def show
-    if @user.id == @contact.user_id
-      render json: @contact
-    else
-      render json: {error: "Can't show that contact"}
-    end
+    render json: @contact
   end
 
   # POST /contacts
@@ -32,7 +28,7 @@ class Api::V1::ContactsController < ApplicationController
     else
       response = Hash.new 
       response['errors'] = @contact.errors
-      render json: response ,  status: :unprocessable_entity
+      render json: response ,  status: :bad_request
     end
   end
 
@@ -48,28 +44,28 @@ class Api::V1::ContactsController < ApplicationController
       else
         response = Hash.new 
         response['errors'] = @contact_history.errors
-        render json: response ,  status: :unprocessable_entity
+        render json: response ,  status: :bad_request
       end
     else
       response = Hash.new 
       response['errors'] = @contact.errors
-      render json: response ,  status: :unprocessable_entity
+      render json: response ,  status: :bad_request
     end
   end
 
   # DELETE /contacts/1
   def destroy
-    if @user.id == @contact.user_id #TODO: before_action
-      @contact.destroy
-    else
-      render json: {error: "Can't destroy that contact"}
-    end
+    return render status: :internal_server_error unless @contact.destroy
+    render status: :ok
   end
 
   private
+    def check_user_contact
+      render json: response , status: :forbidden unless @user.id == @contact.user_id
+    end
 
     def set_contact
-      @contact = Contact.find(params[:id])
+      render json: response, status: :not_found unless @contact = Contact.find(params[:id])
     end
 
     def contact_params
