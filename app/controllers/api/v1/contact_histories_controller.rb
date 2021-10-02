@@ -2,7 +2,7 @@ class Api::V1::ContactHistoriesController < ApplicationController
   before_action :set_contact, only: [:show]
   before_action :check_user_contact, only: [:show, :create]
  
-  # POST /contact_histroies
+  # POST /contact_histories
   def create
     @contact_history = ContactHistory.new(contact_history_params)
     @contact_history.user_id = @user.id
@@ -14,7 +14,7 @@ class Api::V1::ContactHistoriesController < ApplicationController
     end
   end
 
-  # GET /contact_histroies/[id]
+  # GET /contact_histories/[id]
   def show
     @contact_histories = ContactHistory.order("created_at DESC").where(contact_id: params[:id].to_i)
     render json: @contact_histories, status: :ok
