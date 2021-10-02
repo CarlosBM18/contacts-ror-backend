@@ -17,7 +17,7 @@ class Api::V1::ContactHistoriesController < ApplicationController
   # GET /contact_histroies/[id]
   def show
     @contact_histories = ContactHistory.order("created_at DESC").where(contact_id: params[:id].to_i)
-    render json: @contact_histories, :status :ok
+    render json: @contact_histories, status: :ok
   end
 
   private
