@@ -156,7 +156,7 @@ bundle exec rspec
   - `401 UNAUTHORIZED`
   - `403 FORBIDDEN`
 
-### PATCH `/contacts/{id}`
+### PATCH/UPDATE `/contacts/{id}`
 
 - Body
 
