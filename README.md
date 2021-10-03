@@ -1,24 +1,222 @@
-# README
+# Contacts Backend with Ruby on Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Overview
 
-Things you may want to cover:
+- [Ruby on Rails](https://rubyonrails.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [JWT](https://jwt.io/) for user authentication
 
-* Ruby version
+## Live running demo
 
-* System dependencies
+[https://contacts-ror-app.herokuapp.com/api/v1](https://contacts-ror-app.herokuapp.com/api/v1)
 
-* Configuration
+## Install and set up
 
-* Database creation
+Clone the project locally and install the project dependencies from the project's root folder.
 
-* Database initialization
+```sh
+bundle install
+```
 
-* How to run the test suite
+Create a `.env` file and add a `POSTGRESQL_DATABASE_USERNAME` and `POSTGRESQL_DATABASE_PASSWORD` variable with the username and password of the PostreSQL database. For example:
 
-* Services (job queues, cache servers, search engines, etc.)
+```sh
+POSTGRESQL_DATABASE_USERNAME=YOUR_PASSWORD
+POSTGRESQL_DATABASE_PASSWORD=YOUR_USERNAME
+```
 
-* Deployment instructions
+Finally, start the server
 
-* ...
+```sh
+rails s
+```
+
+## Tests
+
+To run the tests:
+
+```sh
+bundle exec rspec
+```
+
+## Routes
+
+### POST `/users`
+
+- Body
+
+```json
+{
+  "email": "carlos@test.es",
+  "password": "test123"
+}
+```
+
+- Success Response
+
+```json
+{
+  "id": 1,
+  "email": "carlos@test.es",
+  "created_at": "2021-10-03T16:20:53.280Z",
+  "updated_at": "2021-10-03T16:20:53.280Z"
+}
+```
+
+- Error Response
+  - `400 BAD REQUEST`
+
+### POST `/login?email={email_string}&password={password_string}`
+
+- Parameters
+  `email` and `password`
+
+- Success Response
+
+```json
+{
+  "user": {
+    "id": 20,
+    "email": "carlos1@test.es",
+    "created_at": "2021-10-03T15:57:38.242Z",
+    "updated_at": "2021-10-03T15:57:38.242Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMH0.UX8SaCzkRQsZfJutKKujynJ5YCev8taMrIxGKjg0wQ0"
+}
+```
+
+- Error Response
+  - `400 BAD REQUEST`
+
+### GET `/contacts`
+
+- Success Response
+
+```json
+[
+  {
+    "id": 1,
+    "first_name": "Carlos",
+    "last_name": "Bertomeu",
+    "email": "carlos@test.es",
+    "phone_number": 666777888
+  }
+]
+```
+
+- Error Response
+  - `401 UNAUTHORIZED`
+
+### POST `/contacts`
+
+- Body
+
+```json
+{
+  "first_name": "Carlos",
+  "last_name": "Bertomeu",
+  "email": "carlos@test.es",
+  "phone_number": 666777888
+}
+```
+
+- Success Response
+
+```json
+{
+  "id": 1,
+  "first_name": "Carlos",
+  "last_name": "Bertomeu",
+  "email": "carlos@test.es",
+  "phone_number": 634558589
+}
+```
+
+- Error Response
+  - `400 BAD REQUEST`
+  - `401 UNAUTHORIZED`
+  - `403 FORBIDDEN`
+
+### GET `/contacts/{id}`
+
+- Success Response
+
+```json
+{
+  "id": {id},
+  "first_name": "Carlos",
+  "last_name": "Bertomeu",
+  "email": "carlos@test.es",
+  "phone_number": 666777888
+}
+```
+
+- Error Response
+  - `404 NOT FOUND`
+  - `401 UNAUTHORIZED`
+  - `403 FORBIDDEN`
+
+### PATCH `/contacts/{id}`
+
+- Body
+
+```json
+{
+  "first_name": "Carlos",
+  "last_name": "Bertomeu",
+  "email": "carlos@test.es",
+  "phone_number": 666777888
+}
+```
+
+- Success Response
+
+```json
+{
+  "id": {id},
+  "first_name": "Carlos",
+  "last_name": "Bertomeu",
+  "email": "carlos@test.es",
+  "phone_number": 666777888
+}
+```
+
+- Error Response
+  - `400 BAD REQUEST`
+  - `401 UNAUTHORIZED`
+  - `403 FORBIDDEN`
+
+### DELETE `/contacts/{id}`
+
+- Success Response
+
+  - `200 OK`
+
+- Error Response
+  - `404 NOT FOUND`
+  - `401 UNAUTHORIZED`
+  - `403 FORBIDDEN`
+
+### GET `/contact_histories/{id}`
+
+- Success Response
+
+```json
+[
+  {
+    "id": 1,
+    "contact_id": {id},
+    "user_id": 1,
+    "first_name": "Carlos",
+    "last_name": "Bertomeu",
+    "email": "carlos@test.es",
+    "phone_number": 666777888,
+    "update_date": "Thu, 03 Oct 2021 17:55:03 GMT"
+  }
+]
+```
+
+- Error Response
+  - `404 NOT FOUND`
+  - `401 UNAUTHORIZED`
+  - `403 FORBIDDEN`
