@@ -1,24 +1,27 @@
 # Contacts Backend with Ruby on Rails
 
-## Overview
+This is the backend for a contacts app where each user can have its own list of contacts. The app handles user authentication and stores the data to be persistent in a database.
+
+## Overview 📋
 
 - [Ruby on Rails](https://rubyonrails.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [JWT](https://jwt.io/) for user authentication
+- [RSpec](https://rspec.info/) for testing
 
-## Live demo
+## Live demo 🚀
 
 [https://contacts-ror-app.herokuapp.com/api/v1](https://contacts-ror-app.herokuapp.com/api/v1)
 
-## Install and set up
+## Install and set up 🔧
 
-Clone the project locally and install the project dependencies from the project's root folder.
+First, clone the project and install the project dependencies, to do so run:
 
 ```sh
 bundle install
 ```
 
-Create a `.env` file and add a `POSTGRESQL_DATABASE_USERNAME` and `POSTGRESQL_DATABASE_PASSWORD` variable with the username and password of the PostreSQL database. For example:
+Create a `.env` file and add a `POSTGRESQL_DATABASE_USERNAME` and `POSTGRESQL_DATABASE_PASSWORD` variable with the username and password of the PostreSQL database. Should be something like:
 
 ```sh
 POSTGRESQL_DATABASE_USERNAME=YOUR_PASSWORD
@@ -31,7 +34,7 @@ Finally, start the server
 rails s
 ```
 
-## Tests
+## Tests ⚙️
 
 To run the tests:
 
@@ -99,7 +102,10 @@ bundle exec rspec
     "first_name": "Carlos",
     "last_name": "Bertomeu",
     "email": "carlos@test.es",
-    "phone_number": 666777888
+    "phone_number": 666777888,
+    "user_id": 1,
+    "created_at": "2021-10-03T19:39:40.372Z",
+    "updated_at": "2021-10-03T19:39:40.372Z"
   }
 ]
 ```
@@ -124,11 +130,14 @@ bundle exec rspec
 
 ```json
 {
-  "id": 1,
+  "id": 45,
   "first_name": "Carlos",
   "last_name": "Bertomeu",
-  "email": "carlos@test.es",
-  "phone_number": 634558589
+  "email": "test@test.es",
+  "phone_number": 666777888,
+  "user_id": 20,
+  "created_at": "2021-10-03T19:52:04.632Z",
+  "updated_at": "2021-10-03T19:52:04.632Z"
 }
 ```
 
@@ -143,11 +152,14 @@ bundle exec rspec
 
 ```json
 {
-  "id": {id},
-  "first_name": "Carlos",
-  "last_name": "Bertomeu",
-  "email": "carlos@test.es",
-  "phone_number": 666777888
+    "id": {id},
+    "first_name": "Carlos",
+    "last_name": "Bertomeu",
+    "email": "carlos@test.es",
+    "phone_number": 666777888,
+    "user_id": 1,
+    "created_at": "2021-10-03T19:39:40.372Z",
+    "updated_at": "2021-10-03T19:47:18.672Z"
 }
 ```
 
@@ -156,7 +168,7 @@ bundle exec rspec
   - `401 UNAUTHORIZED`
   - `403 FORBIDDEN`
 
-### PATCH/UPDATE `/contacts/{id}`
+### PATCH/PUT `/contacts/{id}`
 
 - Body
 
@@ -165,7 +177,7 @@ bundle exec rspec
   "first_name": "Carlos",
   "last_name": "Bertomeu",
   "email": "carlos@test.es",
-  "phone_number": 666777888
+  "phone_number": 666777111
 }
 ```
 
@@ -177,7 +189,10 @@ bundle exec rspec
   "first_name": "Carlos",
   "last_name": "Bertomeu",
   "email": "carlos@test.es",
-  "phone_number": 666777888
+  "phone_number": 666777111,
+  "user_id": 1,
+  "created_at": "2021-10-03T19:39:40.372Z",
+  "updated_at": "2021-10-03T19:47:18.672Z"
 }
 ```
 
@@ -205,13 +220,15 @@ bundle exec rspec
 [
   {
     "id": 1,
-    "contact_id": {id},
-    "user_id": 1,
     "first_name": "Carlos",
     "last_name": "Bertomeu",
-    "email": "carlos@test.es",
-    "phone_number": 666777888,
-    "update_date": "Thu, 03 Oct 2021 17:55:03 GMT"
+    "email": "carlos@test.com",
+    "phone_number": 666777222,
+    "contact_id": {id},
+    "created_at": "2021-10-03T19:39:40.408Z",
+    "updated_at": "2021-10-03T19:39:40.408Z",
+    "state": "created",
+    "user_id": 1
   }
 ]
 ```
