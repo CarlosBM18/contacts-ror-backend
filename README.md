@@ -6,7 +6,7 @@
 - [PostgreSQL](https://www.postgresql.org/)
 - [JWT](https://jwt.io/) for user authentication
 
-## Live running demo
+## Live demo
 
 [https://contacts-ror-app.herokuapp.com/api/v1](https://contacts-ror-app.herokuapp.com/api/v1)
 
