@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      render json: @user, status: :created
+      render json: @user.as_json(only: [:id, :email, :created_at, :updated_at]), status: :created
     else
       response = Hash.new 
       response['errors'] = @user.errors
@@ -30,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
 
     if @user && @user.authenticate(params[:password])
       token = encode_token({user_id: @user.id})
-      render json: {user: @user, token: token}
+      render json: {user: @user.as_json(only: [:id, :email, :created_at, :updated_at]), token: token}
     else
       response = Hash.new
       response['errors'] = {"invalid":["email or password"]}
