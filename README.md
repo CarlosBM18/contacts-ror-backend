@@ -28,7 +28,7 @@ POSTGRESQL_DATABASE_USERNAME=YOUR_PASSWORD
 POSTGRESQL_DATABASE_PASSWORD=YOUR_USERNAME
 ```
 
-Finally, start the server
+Finally, start the server with:
 
 ```sh
 rails s
@@ -42,7 +42,7 @@ To run the tests:
 bundle exec rspec
 ```
 
-## Routes
+## Routes 🚏
 
 ### POST `/users`
 
