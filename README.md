@@ -79,8 +79,8 @@ bundle exec rspec
 ```json
 {
   "user": {
-    "id": 20,
-    "email": "carlos1@test.es",
+    "id": 1,
+    "email": "carlos@test.es",
     "created_at": "2021-10-03T15:57:38.242Z",
     "updated_at": "2021-10-03T15:57:38.242Z"
   },
@@ -130,12 +130,12 @@ bundle exec rspec
 
 ```json
 {
-  "id": 45,
+  "id": 1,
   "first_name": "Carlos",
   "last_name": "Bertomeu",
   "email": "test@test.es",
   "phone_number": 666777888,
-  "user_id": 20,
+  "user_id": 1,
   "created_at": "2021-10-03T19:52:04.632Z",
   "updated_at": "2021-10-03T19:52:04.632Z"
 }
